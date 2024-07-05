@@ -135,3 +135,23 @@ auth.onAuthStateChanged(user => {
         document.getElementById('searchInput').style.display = 'none';
     }
 });
+function displaySnippet(snippet) {
+    const li = document.createElement('li');
+    li.innerHTML = `
+        <strong>${snippet.title} (${snippet.category})</strong>
+        <pre><code class="language-${snippet.language}">${snippet.code}</code></pre>
+        <button onclick="copyToClipboard('${snippet.code}')">Copy</button>
+    `;
+    snippetList.appendChild(li);
+    Prism.highlightAll();
+}
+
+function copyToClipboard(code) {
+    const textarea = document.createElement('textarea');
+    textarea.value = code;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    alert('Code copied to clipboard!');
+}
