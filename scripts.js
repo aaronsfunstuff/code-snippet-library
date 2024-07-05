@@ -1,3 +1,18 @@
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyDHV2hfD6_omPHVTFz4Y02tO_2gQxP-yE0",
+    authDomain: "code-snibbit-project.firebaseapp.com",
+    projectId: "code-snibbit-project",
+    storageBucket: "code-snibbit-project.appspot.com",
+    messagingSenderId: "175669747273",
+    appId: "1:175669747273:web:f66da1e4747899566aa998",
+    measurementId: "G-9BZ2WTLGG5"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+
 document.addEventListener('DOMContentLoaded', loadSnippets);
 
 document.getElementById('snippetForm').addEventListener('submit', function(event) {
@@ -67,3 +82,56 @@ function deleteSnippet(id) {
     document.getElementById('snippetList').innerHTML = '';
     snippets.forEach(snippet => displaySnippet(snippet));
 }
+
+// Authentication functions
+function showRegisterForm() {
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('register-form').style.display = 'block';
+}
+
+function showLoginForm() {
+    document.getElementById('login-form').style.display = 'block';
+    document.getElementById('register-form').style.display = 'none';
+}
+
+function register() {
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+
+    auth.createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+            alert('User registered successfully');
+            showLoginForm();
+        })
+        .catch(error => {
+            alert(error.message);
+        });
+}
+
+function login() {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    auth.signInWithEmailAndPassword(email, password)
+        .then(userCredential => {
+            alert('User logged in successfully');
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('snippetForm').style.display = 'block';
+            document.getElementById('searchInput').style.display = 'block';
+        })
+        .catch(error => {
+            alert(error.message);
+        });
+}
+
+auth.onAuthStateChanged(user => {
+    if (user) {
+        document.getElementById('auth-container').style.display = 'none';
+        document.getElementById('snippetForm').style.display = 'block';
+        document.getElementById('searchInput').style.display = 'block';
+    } else {
+        document.getElementById('auth-container').style.display = 'block';
+        document.getElementById('snippetForm').style.display = 'none';
+        document.getElementById('searchInput').style.display = 'none';
+    }
+});
