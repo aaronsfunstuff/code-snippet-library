@@ -10,7 +10,27 @@
 <body>
     <div class="container">
         <h1>Code Snippet Library</h1>
-        <form id="snippetForm">
+        
+        <!-- Authentication Forms -->
+        <div id="auth-container">
+            <div id="login-form" class="auth-form">
+                <h2>Login</h2>
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button onclick="login()">Login</button>
+                <p>Don't have an account? <a href="#" onclick="showRegisterForm()">Register</a></p>
+            </div>
+            <div id="register-form" class="auth-form" style="display: none;">
+                <h2>Register</h2>
+                <input type="email" id="register-email" placeholder="Email" required>
+                <input type="password" id="register-password" placeholder="Password" required>
+                <button onclick="register()">Register</button>
+                <p>Already have an account? <a href="#" onclick="showLoginForm()">Login</a></p>
+            </div>
+        </div>
+
+        <!-- Snippet Form -->
+        <form id="snippetForm" style="display: none;">
             <input type="text" id="titleInput" placeholder="Snippet Title" required>
             <select id="categoryInput">
                 <option value="JavaScript">JavaScript</option>
@@ -21,10 +41,13 @@
             <textarea id="codeInput" placeholder="Enter your code here..." required></textarea>
             <button type="submit">Add Snippet</button>
         </form>
-        <input type="text" id="searchInput" placeholder="Search snippets...">
+        
+        <input type="text" id="searchInput" placeholder="Search snippets..." style="display: none;">
         <ul id="snippetList"></ul>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="scripts.js"></script>
 </body>
 </html>
